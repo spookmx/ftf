@@ -1,0 +1,10 @@
+<div class="tabs-striped tabs-background-positive tabs-color-light">
+  <div class="tabs">
+    <a href="/user" class="tab-item" ng-class="{active:getState()==='user'}">
+      <i class="icon ion-person"></i>
+    </a>
+    <a href="/sessions" class="tab-item" ng-show="isLoggedIn" ng-class="{active:getState()==='sessions' || getState()==='session-detail'}">
+      <i class="icon ion-easel"></i>
+    </a>
+  </div>
+</div>

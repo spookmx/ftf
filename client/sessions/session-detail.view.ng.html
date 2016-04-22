@@ -1,0 +1,25 @@
+<ion-pane>
+  <ion-content class="padding session-detail">
+    <p>{{$parent.message}}</p>
+    <form ng-submit="$parent.save()" name="$parent.form" novalidate="">
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="Name" ng-model="$parent.session.name"/>
+        </label>
+      </div>
+      <div class="row button-bar">
+        <button type="submit" class="button button-stable">Save</button>
+        <button ng-click="reset()" class="button button-stable">Reset</button>
+        <button ng-click="remove()" class="button button-stable">Remove</button>
+      </div>
+      <div class="list list-inset">
+          <div ng-repeat="attendee in $parent.session.attendees" class="item">
+            {{attendee.attendee}} &nbsp; <span class="item-secondary">{{attendee.company}}</span>
+            <span class="item-note">
+              {{attendee.created_date | date:"EEE, h:mma"}}
+            </span>
+          </div>
+      </div>
+    </form>
+  </ion-content>
+</ion-pane>

@@ -1,0 +1,24 @@
+<ion-pane>
+  <ion-content class="padding sessions">
+    <!--
+      Due to ion-content creating a child scope, we have to use $parent to
+      access our own scope. This only applies for variables inside an
+      ion-content directive. Outside ion-content you can call 'things' directly
+    -->
+    <form ng-submit="$parent.save()" name="$parent.form" novalidate="">
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="Name" ng-model="$parent.newSession.name"/>
+        </label>
+      </div>
+      <button type="submit" class="button button-block button-positive">Add</button>
+    </form>
+    <div class="list">
+      <a ng-repeat="session in $parent.sessions" class="item" href="/sessions/{{session._id}}">
+        {{ session.name }}
+        <span class="badge badge-stable">{{ session.attendees.length }}</span>
+      </a>
+    </div>
+    <p>Total number of sessions: {{ $parent.sessions.length }}</p>
+  </ion-content>
+</ion-pane>

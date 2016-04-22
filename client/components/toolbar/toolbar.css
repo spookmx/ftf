@@ -1,0 +1,15 @@
+.spinner-header{
+	stroke: #FFFFFF;
+}
+.spinner-header svg{
+    margin-top: 3px;
+}
+.status-container{
+	width:auto;
+}
+.status-spinner{
+	padding-left: 0px;
+}
+.status-text{
+	margin-left: -5px;
+}
