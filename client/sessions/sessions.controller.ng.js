@@ -3,7 +3,7 @@
 angular.module('ftfApp')
 .controller('SessionsCtrl', function($scope, $ionicScrollDelegate, $rootScope) {
   $scope.page = 1;
-  $scope.perPage = 10;
+  $scope.perPage = 100;
   $scope.sort = {name_sort : 1};
   $scope.orderProperty = '1';
 
@@ -19,11 +19,7 @@ angular.module('ftfApp')
   });
 
   $scope.subscribe('sessions', function() {
-    return [{
-      sort: $scope.getReactively('sort'),
-      limit: parseInt($scope.getReactively('perPage')),
-      skip: ((parseInt($scope.getReactively('page'))) - 1) * (parseInt($scope.getReactively('perPage')))
-    }, $scope.getReactively('search')];
+    return [$scope.getReactively('search')];
   });
 
   $scope.save = function() {
@@ -32,6 +28,13 @@ angular.module('ftfApp')
       $scope.newSession = undefined;
       $ionicScrollDelegate.resize();
     }
+  };
+
+  $scope.synchSessions = function() {
+    Meteor.call("upsertSessions", function (error, result) {
+      error ? console.error(error) : null;
+      result ? console.log(result) : null;
+    });
   };
 
   $scope.remove = function(session) {

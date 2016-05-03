@@ -20,3 +20,5 @@ angularutils:pagination
 accounts-password
 dotansimha:accounts-ui-angular
 angular@=1.3.5
+matb33:collection-hooks
+http

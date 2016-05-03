@@ -5,20 +5,27 @@
       access our own scope. This only applies for variables inside an
       ion-content directive. Outside ion-content you can call 'things' directly
     -->
-    <form ng-submit="$parent.save()" name="$parent.form" novalidate="">
+    <!-- <form ng-submit="$parent.save()" name="$parent.form" novalidate="">
       <div class="list">
         <label class="item item-input">
           <input type="text" placeholder="Name" ng-model="$parent.newSession.name"/>
         </label>
       </div>
       <button type="submit" class="button button-block button-positive">Add</button>
-    </form>
-    <div class="list">
-      <a ng-repeat="session in $parent.sessions" class="item" href="/sessions/{{session._id}}">
+    </form> -->
+    <button ng-click="$parent.synchSessions()" class="button button-stable">Synch Sessions</button>
+        <p>Showing {{ $parent.sessions.length }} sessions</p>
+    <ion-list>
+      <ion-item collection-repeat="session in $parent.sessions" class="item" href="/sessions/{{session._id}}">
+        {{ session.name }}
+        <span class="badge badge-stable">{{ session.attendees.length }}</span>
+      </ion-item>
+    </ion-list>
+    <!-- <div class="list">
+      <a ng-repeat="session in $parent.sessions" >
         {{ session.name }}
         <span class="badge badge-stable">{{ session.attendees.length }}</span>
       </a>
-    </div>
-    <p>Total number of sessions: {{ $parent.sessions.length }}</p>
+    </div> -->
   </ion-content>
 </ion-pane>

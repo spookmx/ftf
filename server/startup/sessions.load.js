@@ -1,13 +1,8 @@
 Meteor.startup(function() {
   if(Sessions.find().count() === 0) {
     var sessions = [
-      'Data on the Wire',
-      'One Language',
-      'Database Everywhere',
-      'Latency Compensation',
-      'Full Stack Reactivity',
-      'Embrace the Ecosystem',
-      'Simplicity Equals Productivity'
+      'Session One',
+      'Session 2',
     ];
     sessions.forEach(function(session) {
       Sessions.insert({

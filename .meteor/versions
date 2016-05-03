@@ -54,6 +54,7 @@ less@2.5.2-cordova.5
 livedata@1.0.15
 localstorage@1.0.6-cordova.5
 logging@1.0.9-cordova.5
+matb33:collection-hooks@0.8.1
 meteor@1.1.11-cordova.5
 meteor-base@1.0.1
 meteor-env-dev@0.0.1-cordova.5

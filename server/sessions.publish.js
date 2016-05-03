@@ -1,6 +1,6 @@
 'use strict'
 
-Meteor.publish('sessions', function(options, searchString) {
+Meteor.publish('sessions', function(searchString) {
   var where = {
     'name': {
       '$regex': '.*' + (searchString || '') + '.*',
@@ -8,5 +8,5 @@ Meteor.publish('sessions', function(options, searchString) {
     }
   };
   Counts.publish(this, 'numberOfSessions', Sessions.find(where), {noReady: true});
-  return Sessions.find(where, options);
+  return Sessions.find(where);
 });
