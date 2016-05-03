@@ -10,8 +10,8 @@ angular.module('ftfApp')
 		  return Meteor.user();
 		}
 	});
-  	$scope.viewName = 'User';
-  	$scope.login = function() {
+  $scope.viewName = 'User';
+  $scope.login = function() {
 		$ionicLoading.show({template: '<ion-spinner icon="lines" class="spinner-light"></ion-spinner>'});
       	Meteor.loginWithPassword($scope.loginForm.email, $scope.loginForm.password, $scope.loginCompleted);
 	};
@@ -38,5 +38,12 @@ angular.module('ftfApp')
 		$ionicLoading.show({template: '<ion-spinner icon="lines" class="spinner-light"></ion-spinner>'});
       	Meteor.loginWithFacebook({}, $ionicLoading.hide());
 	};
+
+	$scope.synchSessions = function() {
+    Meteor.call("upsertSessions", function (error, result) {
+      error ? console.error(error) : null;
+      result ? console.log(result) : null;
+    });
+  };
 
 });

@@ -2,15 +2,16 @@
 
 angular.module('ftfApp')
 .controller('SessionsCtrl', function($scope, $ionicScrollDelegate, $rootScope) {
-  $scope.page = 1;
-  $scope.perPage = 100;
-  $scope.sort = {name_sort : 1};
-  $scope.orderProperty = '1';
+  $scope.filterDay = "all";
+  $scope.startDate = new Date("May 15, 2016 00:00:00");
+  $scope.endDate = new Date("May 20, 2016 00:00:00");
+
+  //To Do Watch filterDay and adjust startDate and endDate accordingly
 
   $scope.helpers({
     sessions: function() {
-      return Sessions.find({}, {
-        sort: $scope.getReactively('sort')
+      return Sessions.find({start: {$gte:$scope.getReactively('startDate'), $lt:$scope.getReactively('endDate')}}, {
+        sort: {name : 1, start: 1}
       });
     },
     sessionsCount: function() {
@@ -19,7 +20,7 @@ angular.module('ftfApp')
   });
 
   $scope.subscribe('sessions', function() {
-    return [$scope.getReactively('search')];
+    return [$scope.getReactively('filterSearch')];
   });
 
   $scope.save = function() {
@@ -28,13 +29,6 @@ angular.module('ftfApp')
       $scope.newSession = undefined;
       $ionicScrollDelegate.resize();
     }
-  };
-
-  $scope.synchSessions = function() {
-    Meteor.call("upsertSessions", function (error, result) {
-      error ? console.error(error) : null;
-      result ? console.log(result) : null;
-    });
   };
 
   $scope.remove = function(session) {

@@ -1,5 +1,24 @@
 <ion-pane>
-  <ion-content class="padding sessions">
+  <div class="bar bar-header bar-stable">
+    <div class="list list-header">
+      <label class="item item-input item-input-header">
+        <input type="text" placeholder="Search..." ng-model="filterSearch">
+      </label>
+      <label class="item item-input item-select item-input-header">
+        <div class="input-label">
+          Day
+        </div>
+        <select ng-model="filterDay">
+          <option value="all">All</option>
+          <option value="monday">Monday</option>
+          <option value="tuesday">Tuesday</option>
+          <option value="wednesday">Wednesday</option>
+          <option value="thursday">Thursday</option>
+        </select>
+      </label>
+    </div>
+  </div>
+  <ion-content class="padding sessions has-header">
     <!--
       Due to ion-content creating a child scope, we have to use $parent to
       access our own scope. This only applies for variables inside an
@@ -13,11 +32,11 @@
       </div>
       <button type="submit" class="button button-block button-positive">Add</button>
     </form> -->
-    <button ng-click="$parent.synchSessions()" class="button button-stable">Synch Sessions</button>
-        <p>Showing {{ $parent.sessions.length }} sessions</p>
+    <p>Showing {{ sessions.length }} sessions</p>
     <ion-list>
       <ion-item collection-repeat="session in $parent.sessions" class="item" href="/sessions/{{session._id}}">
         {{ session.name }}
+        <span class="item-note"> {{ session.sessionCode }} | {{ session.start  | date : "EEE, HH:mm" }}</span>
         <span class="badge badge-stable">{{ session.attendees.length }}</span>
       </ion-item>
     </ion-list>

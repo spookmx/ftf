@@ -4,3 +4,28 @@
 .item-secondary {
   color: #AAA;
 }
+.list-header{
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-top: 0px;
+  display: flex;
+  width: 100%;
+}
+.item-input-header{
+  display: block;
+  flex: 1;
+  padding-top: 2px;
+}
+.bar-header input[type="text"]{
+  padding-top: 0px;
+  line-height: 10px;
+  height: 30px;
+}
+.bar-header .input-label{
+  padding-top: 3px;
+  width: auto;
+}
+.item-input-header select{
+  padding-left: 0px;
+  padding-right: 43px;
+}
