@@ -2,7 +2,7 @@
 
 angular.module('ftfApp')
 .controller('toolbarController', ['$scope', function($scope) {
-  $scope.name = 'FTF 2015';
+  $scope.name = 'NXPFTF 2016';
   $scope.helpers({
 		status: () => {
 		  return Meteor.status();
