@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('ftfApp')
-.controller('SessionDetailCtrl', function($scope, $stateParams, $state, $rootScope) {
+.controller('SessionDetailCtrl', function($scope, $stateParams, $state, $rootScope, $filter) {
 
   $scope.helpers({
     session: function() {
@@ -13,22 +13,37 @@ angular.module('ftfApp')
 
   $rootScope.helpers({
     sessionId: function() {
-      return $stateParams.sessionId ;
+      return $stateParams.sessionId;
+    },
+    session: function() {
+      return Sessions.findOne({ _id: $stateParams.sessionId });
     }
   });
 
   $rootScope.sessionCheckIn = function(attendee) {
-    Sessions.update({
-        _id: $scope.sessionId
-      }, {
-        $push: { attendees: { registrant: Meteor.userId(), attendee: attendee.fn, company: attendee.org, created_date: new Date() } }
-      }, function(error) {
-        if(error) {
-          alert(error);
-        } else {
-          console.log('Done!');
-        }
-    });
+    !$scope.session.attendees ? $scope.session.attendees = [] : null;
+    var found = $filter('filter')($scope.session.attendees, {uid: attendee.uid}, true);
+    if(found.length){
+      $scope.message = "Attendee already checked in!";
+      $scope.$apply();
+      console.log("Attendee already checked in!");
+    }else{
+      $scope.message = "";
+      $scope.$apply();
+      var name = attendee.n.split(";");
+      name = name[1]+" "+name[0];
+      Sessions.update({
+          _id: $scope.sessionId
+        }, {
+          $push: { attendees: { registrant: Meteor.userId(), attendee: name, company: attendee.org, uid: attendee.uid, created_date: new Date() } }
+        }, function(error) {
+          if(error) {
+            alert(error);
+          } else {
+            console.log('Done!');
+          }
+      });
+    }
   };
 
   $scope.remove = function() {

@@ -41,7 +41,7 @@
     	<div class="card">
           <div class="item item-text-wrap">
             Signed in as {{ $parent.currentUser.emails[0].address}}<br/>
-            <button ng-click="$parent.synchSessions()" class="button button-stable">Synch Sessions</button>
+            <button ng-if="$parent.currentUser.emails[0].address == 'spookmx@gmail.com'" ng-click="$parent.synchSessions()" class="button button-stable">Synch Sessions</button>
           </div>
         </div>
         <button class="button button-block button-positive" ng-click="$parent.logout()"> Sign Out </button>

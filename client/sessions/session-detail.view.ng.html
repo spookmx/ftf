@@ -1,5 +1,7 @@
 <ion-pane>
   <ion-content class="padding session-detail">
+    <h4>{{$parent.session.name}}</h4>
+    <h5>{{ $parent.session.sessionCode }} | {{ $parent.session.start  | date : "EEE, HH:mm" }} | {{ $parent.session.location }}</h5>
     <p>{{$parent.message}}</p>
     <!-- <form ng-submit="$parent.save()" name="$parent.form" novalidate="">
       <div class="list">
@@ -14,8 +16,8 @@
       </div>
     </form> -->
       <div class="list list-inset">
-          <div ng-repeat="attendee in $parent.session.attendees" class="item">
-            {{attendee.attendee}} &nbsp; <span class="item-secondary">{{attendee.company}}</span>
+          <div ng-repeat="attendee in $parent.session.attendees | orderBy:'-created_date'" class="item">
+            {{attendee.attendee}} - <span class="item-secondary">{{attendee.company}}</span>
             <span class="item-note">
               {{attendee.created_date | date:"EEE, h:mma"}}
             </span>

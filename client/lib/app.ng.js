@@ -15,10 +15,10 @@ onReady = function() {
 if(Meteor.isCordova) {
   angular.element(document).on('deviceready', onReady);
   Meteor.startup(function () {
-    nfc.addMimeTypeListener("text/vcard", function (nfcEvent) {
+    nfc.addMimeTypeListener("text/x-vcard", function (nfcEvent) {
         //alert(JSON.stringify(nfcEvent.tag));
         $scope = angular.element(document).scope();
-        message = nfc.bytesToString(nfcEvent.tag.ndefMessage[0].payload.slice(3));
+        var message = nfc.bytesToString(nfcEvent.tag.ndefMessage[0].payload.slice(3));
         attendee = parseVcard(message);
         $scope.sessionCheckIn(attendee);
         $scope.$apply();
