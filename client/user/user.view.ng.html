@@ -1,11 +1,11 @@
 <ion-pane>
   <ion-content class="padding">
     <div ng-hide="$parent.currentUser">
-    	<div class="padding-bottom">
+    	<!-- <div class="padding-bottom">
             <a class="button button-block button-positive icon-left ion-person-add" href="/user/register">
                 Register
             </a>
-        </div>
+        </div> -->
     	<!-- <button class="button button-block button-calm icon-left ion-social-twitter" ng-click="$parent.loginTwitter()">
         	Sign In With Twitter
         </button>
@@ -22,8 +22,8 @@
             <label class="item item-input item-stacked-label"> <span class="input-label">Password</span>
             <input type="password" ng-model="$parent.loginForm.password">
             </label>
-            <button class="button button-block button-calm" ng-click="$parent.login()">Sign In</button>
-            <div class="row">
+            <button class="button button-block button-positive" ng-click="$parent.login()">Sign In</button>
+            <!-- <div class="row">
                 <div class="col">
                     <button class="button button-block button-calm button-outline button-stable" ng-click="$parent.forgotPassword()">
                     	Forgot Password
@@ -34,7 +34,7 @@
                     	Reset Password
                     </button>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div ng-show="$parent.currentUser">

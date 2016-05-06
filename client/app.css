@@ -4,3 +4,20 @@ ion-nav-view.has-header.has-footer.view-container {
 .button.button-stable{
       border-color: #b2b2b2;
 }
+.bar.bar-positive {
+    border-color: #56006d;
+    background-color: #5b1867;
+}
+.tabs-striped.tabs-background-positive .tabs {
+    background-color: #5b1867;
+    background-image: none;
+}
+.tabs-background-positive .tabs, .tabs-background-positive > .tabs {
+    border-color: #56006d;
+}
+.button.button-positive {
+    background-color: #5b1867;
+}
+.button.button-positive.activated {
+    background-color: #56006d;
+}

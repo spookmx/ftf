@@ -35,10 +35,10 @@ angular.module('ftfApp')
       Sessions.update({
           _id: $scope.sessionId
         }, {
-          $push: { attendees: { registrant: Meteor.userId(), attendee: name, company: attendee.org, uid: attendee.uid, created_date: new Date() } }
+          $push: { attendees: { registrant: Meteor.userId(), attendee: name, company: attendee.org, uid: attendee.uid, created_date: new Date(), synch:false } }
         }, function(error) {
           if(error) {
-            alert(error);
+            Logs.insert({type: "error", message: "Unable to register attendee to session: "+$stateParams.sessionId, timestamp: new Date()});
           } else {
             console.log('Done!');
           }
