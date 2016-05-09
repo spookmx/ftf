@@ -1,10 +1,29 @@
 'use strict'
 
 angular.module('ftfApp')
-.controller('SessionsCtrl', function($scope, $ionicScrollDelegate, $rootScope) {
+.controller('SessionsCtrl', function($scope, $ionicScrollDelegate, $rootScope, $ionicLoading) {
+
   $scope.filterDay = "all";
   $scope.startDate = new Date("May 15, 2016 00:00:00");
   $scope.endDate = new Date("May 20, 2016 00:00:00");
+  $scope.loadingStatus = true;
+
+  $scope.$watch('loadingStatus', function() {
+    if($scope.loadingStatus) {
+      $ionicLoading.show({template: '<ion-spinner icon="lines" class="spinner-light"></ion-spinner><p>Loading Sessions...</p>'});
+    }else{
+      $ionicLoading.hide();
+    }
+  });
+
+
+  $scope.$watchCollection('sessions', function() {
+    if($scope.sessionsCount == $scope.sessions.length) {
+      $scope.loadingStatus = false;
+    }else{
+      $scope.loadingStatus = true;
+    }
+  });
 
   //To Do Watch filterDay and adjust startDate and endDate accordingly
   $scope.$watch('filterDay', function() {

@@ -12,7 +12,7 @@ angular.module('ftfApp')
 	});
   $scope.viewName = 'User';
   $scope.login = function() {
-		$ionicLoading.show({template: '<ion-spinner icon="lines" class="spinner-light"></ion-spinner>'});
+		$ionicLoading.show({template: '<ion-spinner icon="lines" class="spinner-light"></ion-spinner><p>Login in...</p>'});
       	Meteor.loginWithPassword($scope.loginForm.email, $scope.loginForm.password, $scope.loginCompleted);
 	};
 	$scope.loginCompleted = function() {
@@ -21,7 +21,7 @@ angular.module('ftfApp')
 		Meteor.users.update({_id: Meteor.userId()},{$set: { 'profile.type': 'email', 'profile.online': true}});
 	};
 	$scope.logout = function() {
-		$ionicLoading.show({template: '<ion-spinner icon="lines" class="spinner-light"></ion-spinner>'});
+		$ionicLoading.show({template: '<ion-spinner icon="lines" class="spinner-light"></ion-spinner><p>Login out...</p>'});
 		Meteor.users.update({_id: Meteor.userId()},{$set: {'profile.online': false}});
       	Meteor.logout($ionicLoading.hide());
 	};

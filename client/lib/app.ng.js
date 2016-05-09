@@ -2,8 +2,7 @@
 angular.module('ftfApp', [
   'angular-meteor',
   'ionic',
-  'angularUtils.directives.dirPagination',
-  'accounts.ui'
+  'angularUtils.directives.dirPagination'
 ]);
 
 onReady = function() {
