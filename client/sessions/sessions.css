@@ -29,3 +29,10 @@
   padding-left: 0px;
   padding-right: 43px;
 }
+.item .badge {
+  top: 16px;
+  right: 16px;
+}
+.list-container{
+  margin-left: -9px;
+}

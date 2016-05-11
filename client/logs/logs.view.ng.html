@@ -1,0 +1,15 @@
+<ion-pane>
+  <ion-content class="padding">
+    <div class="list-container">
+      <ion-list>
+        <ion-item collection-repeat="log in $parent.logs" class="item item-whitespace item-icon-left" item-width="100%">
+          <i ng-if="log.type == 'error'" class="icon ion-android-alert assertive"></i>
+          <i ng-if="log.type == 'warning'" class="icon ion-android-warning energized"></i>
+          {{ log.message }}
+          <span class="item-note"> {{ log.timestamp  | date : "EEE, HH:mm" }}</span>
+          <span class="badge badge-stable">{{ session.attendees.length }}</span>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-content>
+</ion-pane>

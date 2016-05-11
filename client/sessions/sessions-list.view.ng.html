@@ -33,13 +33,16 @@
       <button type="submit" class="button button-block button-positive">Add</button>
     </form> -->
     <p>Showing {{ sessions.length }} of {{ sessionsCount }} sessions</p>
-    <ion-list>
-      <ion-item collection-repeat="session in $parent.sessions" class="item" href="/sessions/{{session._id}}">
-        {{ session.name }}
-        <span class="item-note"> {{ session.sessionCode }} | {{ session.start  | date : "EEE, HH:mm" }}</span>
-        <span class="badge badge-stable">{{ session.attendees.length }}</span>
-      </ion-item>
-    </ion-list>
+    <div class="list-container">
+      <ion-list class="session-list">
+        <ion-item collection-repeat="session in $parent.sessions" class="item" item-height="80" item-width="100%" href="/sessions/{{session._id}}">
+          {{ session.name }}
+          <span class="item-note"> {{ session.sessionCode }} | {{ session.start  | date : "EEE, HH:mm" }}</span>
+          <span class="badge badge-stable">{{ session.attendees.length }}</span>
+        </ion-item>
+      </ion-list>
+    </div>
+
     <!-- <div class="list">
       <a ng-repeat="session in $parent.sessions" >
         {{ session.name }}

@@ -8,22 +8,32 @@ angular.module('ftfApp')
   $scope.endDate = new Date("May 20, 2016 00:00:00");
   $scope.loadingStatus = true;
 
-  $scope.$watch('loadingStatus', function() {
-    if($scope.loadingStatus) {
-      $ionicLoading.show({template: '<ion-spinner icon="lines" class="spinner-light"></ion-spinner><p>Loading Sessions...</p>'});
-    }else{
-      $ionicLoading.hide();
-    }
-  });
-
-
-  $scope.$watchCollection('sessions', function() {
-    if($scope.sessionsCount == $scope.sessions.length) {
-      $scope.loadingStatus = false;
-    }else{
-      $scope.loadingStatus = true;
-    }
-  });
+  // $scope.$watch('filterSearch', function() {
+  //   if($scope.filterSearch != ""){
+  //     $scope.filterActive = true;
+  //   }else{
+  //     $scope.filterActive = false;
+  //   }
+  // });
+  //
+  // $scope.$watch('loadingStatus', function() {
+  //   if($scope.loadingStatus) {
+  //     $ionicLoading.show({template: '<ion-spinner icon="lines" class="spinner-light"></ion-spinner><p>Loading Sessions...</p>'});
+  //   }else{
+  //     $ionicLoading.hide();
+  //   }
+  // });
+  //
+  //
+  // $scope.$watchCollection('sessions', function() {
+  //   if($scope.sessionsCount == $scope.sessions.length || $scope.filterActive) {
+  //     $scope.loadingStatus = false;
+  //   }else{
+  //     $scope.loadingStatus = true;
+  //   }
+  // });
+  //
+  // $scope.filterActive = false;
 
   //To Do Watch filterDay and adjust startDate and endDate accordingly
   $scope.$watch('filterDay', function() {
@@ -31,26 +41,32 @@ angular.module('ftfApp')
       case "all":
         $scope.startDate = new Date("May 15, 2016 00:00:00");
         $scope.endDate = new Date("May 20, 2016 00:00:00");
+        $scope.filterActive = false;
         break;
       case "monday":
         $scope.startDate = new Date("May 16, 2016 00:00:00");
         $scope.endDate = new Date("May 16, 2016 23:59:59");
+        $scope.filterActive = true;
         break;
       case "tuesday":
         $scope.startDate = new Date("May 17, 2016 00:00:00");
         $scope.endDate = new Date("May 17, 2016 23:59:59");
+        $scope.filterActive = true;
         break;
       case "wednesday":
         $scope.startDate = new Date("May 18, 2016 00:00:00");
         $scope.endDate = new Date("May 18, 2016 23:59:59");
+        $scope.filterActive = true;
         break;
       case "thursday":
         $scope.startDate = new Date("May 19, 2016 00:00:00");
         $scope.endDate = new Date("May 19, 2016 23:59:59");
+        $scope.filterActive = true;
         break;
       default:
         $scope.startDate = new Date("May 15, 2016 00:00:00");
         $scope.endDate = new Date("May 20, 2016 00:00:00");
+        $scope.filterActive = false;
     }
   });
   $scope.helpers({

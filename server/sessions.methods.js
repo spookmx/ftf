@@ -36,16 +36,16 @@ Meteor.methods({
 Sessions.after.update(function (userId, doc, fieldNames, modifier, options) {
   if(modifier.$push){
     var registration = doc.attendees[doc.attendees.length-1];
-    var sessionID = doc.sessionID;
+    var sessionCode = doc.sessionCode;
     var timeUNIX = (registration.created_date.getTime()/1000).toFixed(0);
     //console.log("UID: "+registration.uid+" @ "+sessionID+" @ "+timeUNIX);
     HTTP.get("https://maria.spotme.com/api/v1/eid/9a2b57983d9149b1ff9cedc66d5dde29/nodehandlers/nxpnfc/attendance",
-    {params: {key: "Xj6Za32pCb", participant_id:registration.uid, session_id:sessionID, timestamp:timeUNIX }},
+    {params: {key: "Xj6Za32pCb", participant_id:registration.uid, session_id:sessionCode, timestamp:timeUNIX }},
     function(error, response){
       if(error){
-        Logs.insert({type: "error", message: "Unable to register attendee to session with SpotMe. Session: "+doc.sessionID+" Attendee:"+registration.uid, timestamp: new Date()});
+        Logs.insert({type: "error", message: "SpotMe HTTP endpoint GET error. Session: "+doc.sessionCode+", Attendee:"+registration.uid, timestamp: new Date()});
       }else{
-        if(!response.error){
+        if(!response.data.error){
           Sessions.update({
               sessionID: doc.sessionID, "attendees.uid": registration.uid
             },{
@@ -53,13 +53,13 @@ Sessions.after.update(function (userId, doc, fieldNames, modifier, options) {
             },
             function(error) {
               if(error) {
-                Logs.insert({type: "error", message: "Unable to update synch confirmation. Session: "+doc.sessionID+" Attendee:"+registration.uid, timestamp: new Date()});
+                Logs.insert({type: "error", message: "Session COLLECTION update error. Session: "+doc.sessionCode+", Attendee:"+registration.uid, timestamp: new Date()});
               } else {
                 //console.log('Attendee synched correctly!');
               }
           });
         }else{
-          Logs.insert({type: "warning", message: "SpotMe API error: "+response.message+" Session: "+doc.sessionID+" Attendee:"+registration.uid, timestamp: new Date()});
+          Logs.insert({type: "warning", message: "SpotMe API error: "+response.data.message+", Session: "+doc.sessionCode+", Attendee:"+registration.uid, timestamp: new Date()});
         }
       }
     });

@@ -19,8 +19,10 @@ App.launchScreens({
   'android_mdpi_landscape': 'resources/splash/splash-470x320.png',
   'android_hdpi_portrait': 'resources/splash/splash-480x640.png',
   'android_hdpi_landscape': 'resources/splash/splash-640x480.png',
-  'android_xhdpi_portrait': 'resources/splash/splash-720x960.png',
-  'android_xhdpi_landscape': 'resources/splash/splash-960x720.png',
-  'android_xxhdpi_portrait': 'resources/splash/splash-1080x1440.png',
-  'android_xxhdpi_landscape': 'resources/splash/splash-1440x1080.png'
+  'android_xhdpi_portrait': 'resources/splash/splash-720x1280.png',
+  'android_xhdpi_landscape': 'resources/splash/splash-1280x720.png',
+  'android_xxhdpi_portrait': 'resources/splash/splash-960x1600.png',
+  'android_xxhdpi_landscape': 'resources/splash/splash-1600x960.png',
+  'android_xxxhdpi_portrait': 'resources/splash/splash-1280x1920.png',
+  'android_xxxhdpi_landscape': 'resources/splash/splash-1920x1280.png'
 });
