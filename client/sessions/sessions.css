@@ -18,7 +18,6 @@
 }
 .bar-header input[type="text"]{
   padding-top: 0px;
-  line-height: 10px;
   height: 30px;
 }
 .bar-header .input-label{
