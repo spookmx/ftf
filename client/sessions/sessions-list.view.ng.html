@@ -19,6 +19,7 @@
     </div>
   </div>
   <ion-content class="padding sessions has-header">
+    <div ng-if="!$parent.isCordova" class="card">
         <div class="item item-text-wrap">
           <button ng-click="$parent.exportReport()" class="button button-block button-stable">Export Report</button>
         </div>

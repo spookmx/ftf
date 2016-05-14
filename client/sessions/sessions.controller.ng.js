@@ -77,6 +77,9 @@ angular.module('ftfApp')
     },
     sessionsCount: function() {
       return Counts.get('numberOfSessions');
+    },
+    isCordova: function() {
+      return Meteor.isCordova;
     }
   });
 
@@ -91,6 +94,11 @@ angular.module('ftfApp')
       $ionicScrollDelegate.resize();
     }
   };
+
+  $scope.exportReport = function(){
+    var csv = JSON2CSV($scope.sessions);
+    window.open("data:text/csv;charset=utf-8," + escape(csv));
+  }
 
   $scope.remove = function(session) {
     console.log("Session removed")
