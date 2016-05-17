@@ -1,6 +1,46 @@
 'use strict'
 
 Meteor.methods({
+  synchSessions: function () {
+    var currentSessions = Sessions.find().fetch();
+    currentSessions.forEach(function (doc, index) {
+      if(doc.attendees){
+        doc.attendees.forEach(function(docInner, indexInner){
+          if(!docInner.synch){
+            //Begin synch
+            var timeUNIX = (docInner.created_date.getTime()/1000).toFixed(0);
+            console.log(doc.sessionCode, docInner.uid, timeUNIX);
+            HTTP.get("https://maria.spotme.com/api/v1/eid/9a2b57983d9149b1ff9cedc66d5dde29/nodehandlers/nxpnfc/attendance",
+            {params: {key: "Xj6Za32pCb", participant_id:docInner.uid, session_id:doc.sessionCode, timestamp:timeUNIX }},
+            function(error, response){
+              if(error){
+                Logs.insert({type: "error", message: "SpotMe HTTP endpoint GET error. Session: "+doc.sessionCode+", Attendee:"+docInner.uid, timestamp: new Date()});
+              }else{
+                if(!response.data.error){
+                  Sessions.update({
+                      sessionID: doc.sessionID, "attendees.uid": docInner.uid
+                    },{
+                      $set: { "attendees.$.synch": true }
+                    },
+                    function(error) {
+                      if(error) {
+                        Logs.insert({type: "error", message: "Session COLLECTION update error. Session: "+doc.sessionCode+", Attendee:"+docInner.uid, timestamp: new Date()});
+                      } else {
+                        //console.log('Attendee synched correctly!');
+                      }
+                  });
+                }else{
+                  Logs.insert({type: "warning", message: "SpotMe API error: "+response.data.message+", Session: "+doc.sessionCode+", Attendee:"+docInner.uid, timestamp: new Date()});
+                }
+              }
+            });
+            //End synch
+          }
+        });
+      }
+   });
+   return "synchSessions executed correctly";
+  },
   upsertSessions: function () {
     HTTP.get("https://maria.spotme.com/api/v1/eid/9a2b57983d9149b1ff9cedc66d5dde29/nodehandlers/nxpnfc/schedule",
     {params: {key: "Xj6Za32pCb", view:"all"}},
