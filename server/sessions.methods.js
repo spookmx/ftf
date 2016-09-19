@@ -10,7 +10,7 @@ Meteor.methods({
             //Begin synch
             var timeUNIX = (docInner.created_date.getTime()/1000).toFixed(0);
             console.log(doc.sessionCode, docInner.uid, timeUNIX);
-            HTTP.get("https://maria.spotme.com/api/v1/eid/9a2b57983d9149b1ff9cedc66d5dde29/nodehandlers/nxpnfc/attendance",
+            HTTP.get("http://97.79.186.153/api/v1/eid/9a2b57983d9149b1ff9cedc66d5dde29/nodehandlers/nxpnfc/attendance",
             {params: {key: "Xj6Za32pCb", participant_id:docInner.uid, session_id:doc.sessionCode, timestamp:timeUNIX }},
             function(error, response){
               if(error){
@@ -42,7 +42,7 @@ Meteor.methods({
    return "synchSessions executed correctly";
   },
   upsertSessions: function () {
-    HTTP.get("https://maria.spotme.com/api/v1/eid/9a2b57983d9149b1ff9cedc66d5dde29/nodehandlers/nxpnfc/schedule",
+    HTTP.get("http://97.79.186.153/api/v1/eid/9a2b57983d9149b1ff9cedc66d5dde29/nodehandlers/nxpnfc/schedule",
     {params: {key: "Xj6Za32pCb", view:"all"}},
     function(error, result) {
       if(error){
@@ -79,7 +79,7 @@ Sessions.after.update(function (userId, doc, fieldNames, modifier, options) {
     var sessionCode = doc.sessionCode;
     var timeUNIX = (registration.created_date.getTime()/1000).toFixed(0);
     //console.log("UID: "+registration.uid+" @ "+sessionID+" @ "+timeUNIX);
-    HTTP.get("https://maria.spotme.com/api/v1/eid/9a2b57983d9149b1ff9cedc66d5dde29/nodehandlers/nxpnfc/attendance",
+    HTTP.get("http://97.79.186.153/api/v1/eid/9a2b57983d9149b1ff9cedc66d5dde29/nodehandlers/nxpnfc/attendance",
     {params: {key: "Xj6Za32pCb", participant_id:registration.uid, session_id:sessionCode, timestamp:timeUNIX }},
     function(error, response){
       if(error){

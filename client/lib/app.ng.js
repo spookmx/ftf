@@ -9,13 +9,27 @@ onReady = function() {
   angular.bootstrap(document, ['ftfApp']);
 };
 
-
+ROOTURL = document.location.origin;
+AUDIO_SUCCESS = new Media(ROOTURL+"/success.mp3");
+AUDIO_ERROR = new Media(ROOTURL+"/error.mp3");
 
 if(Meteor.isCordova) {
   angular.element(document).on('deviceready', onReady);
   Meteor.startup(function () {
+    nfc.addNdefListener(function (nfcEvent) {
+        var message = nfc.bytesToString(nfcEvent.tag.ndefMessage[0].payload.slice(3));
+        $scope = angular.element(document).scope();
+        AUDIO_ERROR.play();
+        $scope.sessionMessage("NFC tag not encoded properly!");
+        $scope.$apply();
+        $scope = null;
+    }, function () {
+        //console.log("NFC Tag Reading Enabled");
+    }, function (reason) {
+        console.log("Error adding NFC Listener " + reason);
+    });
     nfc.addMimeTypeListener("text/x-vcard", function (nfcEvent) {
-        //alert(JSON.stringify(nfcEvent.tag));
+        //console.log(JSON.stringify(nfcEvent.tag));
         $scope = angular.element(document).scope();
         var message = nfc.bytesToString(nfcEvent.tag.ndefMessage[0].payload.slice(3));
         attendee = parseVcard(message);
@@ -23,9 +37,9 @@ if(Meteor.isCordova) {
         $scope.$apply();
         $scope = null;
     }, function () {
-        //alert("NFC Tag Reading Enabled");
+        //console.log("NFC Tag Reading Enabled");
     }, function (reason) {
-        alert("Error adding NFC Listener " + reason);
+        console.log("Error adding NFC Listener " + reason);
     });
   });
 } else {

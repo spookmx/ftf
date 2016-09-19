@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('ftfApp')
-.controller('SessionDetailCtrl', function($scope, $stateParams, $state, $rootScope, $filter) {
+.controller('SessionDetailCtrl', function($scope, $stateParams, $state, $rootScope, $filter, $timeout) {
 
   $scope.helpers({
     session: function() {
@@ -20,14 +20,28 @@ angular.module('ftfApp')
     }
   });
 
+  $rootScope.sessionMessage = function(message){
+    $scope.message = message;
+    $scope.$apply();
+    console.log(message);
+    $timeout(()=>{
+      $scope.message = null;
+    }, 5000);
+  };
+
   $rootScope.sessionCheckIn = function(attendee) {
     !$scope.session.attendees ? $scope.session.attendees = [] : null;
     var found = $filter('filter')($scope.session.attendees, {uid: attendee.uid}, true);
     if(found.length){
       $scope.message = "Attendee already checked in!";
+      AUDIO_ERROR.play();
       $scope.$apply();
       console.log("Attendee already checked in!");
+      $timeout(()=>{
+        $scope.message = null;
+      }, 5000);
     }else{
+      AUDIO_SUCCESS.play();
       $scope.message = "";
       $scope.$apply();
       var name = attendee.n.split(";");

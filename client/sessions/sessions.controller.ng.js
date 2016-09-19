@@ -70,11 +70,11 @@ angular.module('ftfApp')
     }
   });
   $scope.helpers({
-    sessions: function() {
-      return Sessions.find({start: {$gte:$scope.getReactively('startDate'), $lt:$scope.getReactively('endDate')}}, {
-        sort: {name : 1, start: 1}
-      });
-    },
+    // sessions: function() {
+    //   return Sessions.find({start: {$gte:$scope.getReactively('startDate'), $lt:$scope.getReactively('endDate')}}, {
+    //     sort: {name : 1, start: 1}
+    //   });
+    // },
     sessionsCount: function() {
       return Counts.get('numberOfSessions');
     },
@@ -83,9 +83,33 @@ angular.module('ftfApp')
     }
   });
 
-  $scope.subscribe('sessions', function() {
-    return [$scope.getReactively('filterSearch')];
-  });
+  $scope.subscribe('sessions');
+  $scope.sessions = [];
+  $scope.search = function() {
+    if ($scope.filterSearch || $scope.filterActive ) {
+      var searchTerm = {$or:[{'name': {
+                '$regex': '.*' + ($scope.filterSearch || '') + '.*',
+                '$options': 'i'
+              }
+            },
+          {'sessionCode': {
+              '$regex': '.*' + ($scope.filterSearch || '') + '.*',
+              '$options': 'i'
+            }
+          }
+      ]
+      };
+      var searchDate = {
+        start: {
+          $gte:$scope.getReactively('startDate'),
+          $lt:$scope.getReactively('endDate')
+        }
+      };
+      $scope.sessions = Sessions.find({$and:[searchTerm, searchDate]}, {
+          sort: {name : 1, start: 1}
+        }).fetch();
+    }
+  };
 
   $scope.save = function() {
     if ($scope.form.$valid) {
