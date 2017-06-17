@@ -34,14 +34,12 @@ angular.module('ftfApp')
     var found = $filter('filter')($scope.session.attendees, {uid: attendee.uid}, true);
     if(found.length){
       $scope.message = "Attendee already checked in!";
-      AUDIO_ERROR.play();
       $scope.$apply();
       console.log("Attendee already checked in!");
       $timeout(()=>{
         $scope.message = null;
       }, 5000);
     }else{
-      AUDIO_SUCCESS.play();
       $scope.message = "";
       $scope.$apply();
       var name = attendee.n.split(";");
@@ -52,6 +50,36 @@ angular.module('ftfApp')
           $push: { attendees: { registrant: Meteor.userId(), attendee: name, company: attendee.org, uid: attendee.uid, created_date: new Date(), synch:false } }
         }, function(error) {
           if(error) {
+            Logs.insert({type: "error", message: "Unable to register attendee to session: "+$stateParams.sessionId, timestamp: new Date()});
+          } else {
+            console.log('Done!');
+          }
+      });
+    }
+  };
+
+  $rootScope.sessionCheckInbyTagId = function(attendee) {
+    console.log(attendee);
+    !$scope.session.attendees ? $scope.session.attendees = [] : null;
+    var found = $filter('filter')($scope.session.attendees, {uid: attendee}, true);
+    if(found.length){
+      $scope.message = "Attendee already checked in!";
+      $scope.$apply();
+      console.log("Attendee already checked in!");
+      $timeout(()=>{
+        $scope.message = null;
+      }, 5000);
+    }else{
+      $scope.message = "";
+      $scope.$apply();
+      Sessions.update({
+          _id: $scope.sessionId
+        }, {
+          $push: { attendees: { uid: attendee, created_date: new Date(), synch:false } }
+        }, function(error) {
+          if(error) {
+            console.log("################################Error############################");
+            console.log(error);
             Logs.insert({type: "error", message: "Unable to register attendee to session: "+$stateParams.sessionId, timestamp: new Date()});
           } else {
             console.log('Done!');

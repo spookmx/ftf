@@ -4,8 +4,8 @@ angular.module('ftfApp')
 .controller('SessionsCtrl', function($scope, $ionicScrollDelegate, $rootScope, $ionicLoading) {
 
   $scope.filterDay = "all";
-  $scope.startDate = new Date("May 15, 2016 00:00:00");
-  $scope.endDate = new Date("May 20, 2016 00:00:00");
+  $scope.startDate = new Date("Jun 20, 2017 00:00:00");
+  $scope.endDate = new Date("Jun 22, 2017 00:00:00");
   $scope.loadingStatus = true;
 
   // $scope.$watch('filterSearch', function() {
@@ -39,8 +39,8 @@ angular.module('ftfApp')
   $scope.$watch('filterDay', function() {
     switch ($scope.filterDay) {
       case "all":
-        $scope.startDate = new Date("May 15, 2016 00:00:00");
-        $scope.endDate = new Date("May 20, 2016 00:00:00");
+        $scope.startDate = new Date("Jun 20, 2017 00:00:00");
+        $scope.endDate = new Date("Jun 22, 2017 00:00:00");
         $scope.filterActive = false;
         break;
       case "monday":
@@ -49,18 +49,18 @@ angular.module('ftfApp')
         $scope.filterActive = true;
         break;
       case "tuesday":
-        $scope.startDate = new Date("May 17, 2016 00:00:00");
-        $scope.endDate = new Date("May 17, 2016 23:59:59");
+        $scope.startDate = new Date("Jun 20, 2017 00:00:00");
+        $scope.endDate = new Date("Jun 20, 2017 23:59:59");
         $scope.filterActive = true;
         break;
       case "wednesday":
-        $scope.startDate = new Date("May 18, 2016 00:00:00");
-        $scope.endDate = new Date("May 18, 2016 23:59:59");
+        $scope.startDate = new Date("Jun 21, 2017 00:00:00");
+        $scope.endDate = new Date("Jun 21, 2017 23:59:59");
         $scope.filterActive = true;
         break;
       case "thursday":
-        $scope.startDate = new Date("May 19, 2016 00:00:00");
-        $scope.endDate = new Date("May 19, 2016 23:59:59");
+        $scope.startDate = new Date("Sep 29, 2016 00:00:00");
+        $scope.endDate = new Date("Sep 29, 2016 23:59:59");
         $scope.filterActive = true;
         break;
       default:
@@ -105,8 +105,13 @@ angular.module('ftfApp')
           $lt:$scope.getReactively('endDate')
         }
       };
-      $scope.sessions = Sessions.find({$and:[searchTerm, searchDate]}, {
-          sort: {name : 1, start: 1}
+      // $scope.sessions = Sessions.find({$and:[searchTerm, searchDate]}, {
+      //     sort: {name : 1, start: 1}
+      //   }).fetch();
+
+      //Ignore dates
+      $scope.sessions = Sessions.find(searchTerm, {
+          sort: {name : 1}
         }).fetch();
     }
   };

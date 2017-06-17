@@ -40,6 +40,13 @@ angular.module('ftfApp')
 	};
 
 	$scope.synchSessions = function() {
+    Meteor.call("synchSessions", function (error, result) {
+      error ? console.error(error) : null;
+      result ? console.log(result) : null;
+    });
+  };
+
+	$scope.upsertSessions = function() {
     Meteor.call("upsertSessions", function (error, result) {
       error ? console.error(error) : null;
       result ? console.log(result) : null;

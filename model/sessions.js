@@ -7,7 +7,7 @@ Sessions.allow({
     return true;
   },
   update: function(userId, session, fields, modifier) {
-    session.createdAt = new Date();
+    //session.createdAt = new Date();
     session.name_sort = session.name.toLowerCase();
     return true;
   },

@@ -14,7 +14,8 @@ angular.module('ftfApp')
     controller: 'SessionDetailCtrl',
     resolve: {
       currentUser: ['$meteor', function($meteor) {
-        return $meteor.requireUser();
+        return true;
+        //return $meteor.requireUser();
       }]
     }
   });

@@ -1,7 +1,7 @@
 <ion-pane>
   <ion-content class="padding session-detail">
     <h4>{{$parent.session.name}}</h4>
-    <h5>{{ $parent.session.sessionCode }} | {{ $parent.session.start  | date : "EEE, HH:mm" }} | {{ $parent.session.location }}</h5>
+    <h5>{{ $parent.session.sessionCode }} | {{ $parent.session.start  | date : "EEE, HH:mm" }} | {{ $parent.session.location.en }}</h5>
     <div class="list card" ng-if="$parent.message">
       <a class="item item-icon-left positive" href="#">
         <i class="icon ion-information-circled"></i>
@@ -10,7 +10,8 @@
     </div>
       <div class="list list-inset">
           <div ng-repeat="attendee in $parent.session.attendees | orderBy:'-created_date'" class="item">
-            {{attendee.attendee}} - <span class="item-secondary">{{attendee.company}}</span>
+            {{attendee.uid}}
+            <!-- - <span class="item-secondary">{{attendee.company}}</span> -->
             <span class="item-note">
               {{attendee.created_date | date:"EEE, h:mma"}}
               <i ng-if="attendee.synch" class="icon ion-checkmark"></i>

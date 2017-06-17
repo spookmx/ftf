@@ -2,7 +2,7 @@
 
 angular.module('ftfApp')
 .controller('toolbarController', ['$scope', function($scope) {
-  $scope.name = 'NXPFTF 2016';
+  $scope.name = 'NXP FTF Connects';
   $scope.helpers({
 		status: () => {
 		  return Meteor.status();
